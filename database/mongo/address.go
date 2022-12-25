@@ -22,10 +22,7 @@ func SaveAddress(provider *mongo.MongoProvider, repo *AddressMongoRepository) er
 
 	collection, close := repo.collection()
 	defer close()
-	// ctx, _ := context.WithTimeout(context.Background(), 3*time.Second)
 	var docs []interface{}
-	// var docs []model.Address
-	// err := collection.Find(bson.M{"order": 10891}).One(&docs)
 	n, _ := collection.Find(bson.M{"order": 10891}).Count()
 	if n == 0 {
 		err := Insert(docs, collection)
