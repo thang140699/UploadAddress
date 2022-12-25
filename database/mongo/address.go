@@ -24,22 +24,21 @@ func SaveAddress(provider *mongo.MongoProvider, repo *AddressMongoRepository) er
 	defer close()
 	// ctx, _ := context.WithTimeout(context.Background(), 3*time.Second)
 	var docs []interface{}
-	var dfg []model.Address
-	err := collection.Find(bson.M{"order": 10891}).One(&dfg)
-	if err != nil {
-		fmt.Println(err)
-		err = Insert(docs, collection)
+	// var docs []model.Address
+	// err := collection.Find(bson.M{"order": 10891}).One(&docs)
+	n, _ := collection.Find(bson.M{"order": 10891}).Count()
+	if n == 0 {
+		err := Insert(docs, collection)
 		if err != nil {
 			return err
 		}
 		return nil
 	}
-	fmt.Println(docs)
 	return nil
 }
 
 func Insert(docs []interface{}, collection *mgo.Collection) error {
-	byteValues, err := ioutil.ReadFile("/home/thang/Wedding-event/Wedding_Utilities/utilities/provider/mongo/new_address_value.json")
+	byteValues, err := ioutil.ReadFile("/home/isophtalic/Workspace/code/src/Wedding/UploadAddress/UploadAddress/utilities/provider/mongo/new_address_value.json")
 	if err != nil {
 		fmt.Println("ioutil.ReadFile Error", err)
 		return err
